@@ -13,15 +13,8 @@ public class CustomResponse {
 	        this.httpCode = 200;
 	        data = new LinkedList();
 	        this.mesage = "Ok";
-	    }
+	    }    
 	    
-	    public void updateArticulo(int idArticulo, Object articulo){ //ArticuloModel
-	        data = articulo;
-	    }
-	    
-	    public void deleteArticulo(int idArticulo){
-	        
-	    }
 
 	    public Integer getHttpCode() {
 	        return httpCode;
@@ -38,7 +31,8 @@ public class CustomResponse {
 	    public void setData(Object data) {
 	        this.data = data;
 	    }
-
+	    
+	    
 	    public String getMesage() {
 	        return mesage;
 	    }

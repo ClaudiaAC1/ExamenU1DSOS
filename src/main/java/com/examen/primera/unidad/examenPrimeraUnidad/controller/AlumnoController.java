@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.examen.primera.unidad.examenPrimeraUnidad.model.AlumnoModel;
 import com.examen.primera.unidad.examenPrimeraUnidad.service.AlumnoService;
+import com.examen.primera.unidad.examenPrimeraUnidad.utils.Custom2;
 import com.examen.primera.unidad.examenPrimeraUnidad.utils.CustomResponse;
 import com.examen.primera.unidad.examenPrimeraUnidad.utils.Data;
 
@@ -33,7 +34,7 @@ public class AlumnoController {
 		CustomResponse customResponse= new CustomResponse();
 		alumno=alumnoService.getAlumno(numControl);
 		Double ICA= alumno.getMedidaCintura() / alumno.getMedidaAltura();;
-		alumno.setICA(ICA);
+		alumno.setcalculoICA(ICA);
 		
 		if(alumno.getSexo().equals('h')) {
 			if(ICA <= 0.34) {
@@ -67,9 +68,19 @@ public class AlumnoController {
 			}
 			
 		}
-		Data data= new Data(alumno.getICA(), alumno.getNivel());
+		Data data= new Data(alumno.getcalculoICA(), alumno.getNivel());
 		customResponse.setData(data);
 		
 		return customResponse;
 	}
+
+	@GetMapping("/alumno/{numControl}")
+	public Custom2 getAlumno(@PathVariable String numControl) {
+		Custom2 customResponse= new Custom2();
+		
+		customResponse.setData(alumnoService.getAlumno(numControl));
+		
+		return customResponse;
+	}
 }
+

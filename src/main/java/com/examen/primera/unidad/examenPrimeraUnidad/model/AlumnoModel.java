@@ -19,7 +19,7 @@ public class AlumnoModel {
 	private Character sexo; // h m
 	private Double medidaCintura;
 	private Double medidaAltura;
-	private Double ICA;
+	private Double calculoICA;
 	private String nivel;
 	
 	public AlumnoModel() {}
@@ -30,6 +30,17 @@ public class AlumnoModel {
 		this.sexo = sexo;
 		this.medidaCintura = medidaCintura;
 		this.medidaAltura = medidaAltura;
+	}
+	
+
+	public AlumnoModel(String numControl, Character sexo, Double medidaCintura, Double medidaAltura, Double calculoICA,
+			String nivel) {
+		this.numControl = numControl;
+		this.sexo = sexo;
+		this.medidaCintura = medidaCintura;
+		this.medidaAltura = medidaAltura;
+		this.calculoICA = calculoICA;
+		this.nivel = nivel;
 	}
 
 	public Integer getId() {
@@ -61,12 +72,12 @@ public class AlumnoModel {
 		this.medidaAltura = medidaAltura;
 	}
 
-	public Double getICA() {
-		return ICA;
+	public Double getcalculoICA() {
+		return calculoICA;
 	}
 
-	public void setICA(Double iCA) {
-		ICA = iCA;
+	public void setcalculoICA(Double calculoICA) {
+		this.calculoICA = calculoICA;
 	}
 
 	public String getNivel() {

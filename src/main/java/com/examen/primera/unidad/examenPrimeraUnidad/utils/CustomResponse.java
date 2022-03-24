@@ -6,12 +6,12 @@ import java.util.LinkedList;
 
 public class CustomResponse {
 	 private Integer httpCode;
-	    private Object data;
+	    private Data data;
 	    private String mesage;
 	    
 	    public CustomResponse(){
 	        this.httpCode = 200;
-	        data = new LinkedList();
+	        data = new Data();
 	        this.mesage = "Ok";
 	    }    
 	    
@@ -28,7 +28,7 @@ public class CustomResponse {
 	        return data;
 	    }
 
-	    public void setData(Object data) {
+	    public void setData(Data data) {
 	        this.data = data;
 	    }
 	    

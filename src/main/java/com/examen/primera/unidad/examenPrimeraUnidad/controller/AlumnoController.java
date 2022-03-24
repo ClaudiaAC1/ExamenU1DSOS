@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.examen.primera.unidad.examenPrimeraUnidad.model.AlumnoModel;
 import com.examen.primera.unidad.examenPrimeraUnidad.service.AlumnoService;
 import com.examen.primera.unidad.examenPrimeraUnidad.utils.CustomResponse;
+import com.examen.primera.unidad.examenPrimeraUnidad.utils.Data;
 
 @RestController
 @RequestMapping("/alumno/ica")
@@ -66,8 +67,9 @@ public class AlumnoController {
 			}
 			
 		}
-		customResponse.setData(alumno.getICA() +"  "+ alumno.getNivel());
-		//customResponse.setData(num + "ca");
+		Data data= new Data(alumno.getICA(), alumno.getNivel());
+		customResponse.setData(data);
+		
 		return customResponse;
 	}
 }

@@ -1,8 +1,5 @@
 package com.examen.primera.unidad.examenPrimeraUnidad.utils;
 
-import java.util.LinkedList;
-
-
 
 public class CustomResponse {
 	 private Integer httpCode;

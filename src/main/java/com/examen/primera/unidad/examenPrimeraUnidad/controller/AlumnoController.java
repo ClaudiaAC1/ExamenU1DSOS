@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.examen.primera.unidad.examenPrimeraUnidad.Implements.CalculadoraICA;
 import com.examen.primera.unidad.examenPrimeraUnidad.model.AlumnoModel;
 import com.examen.primera.unidad.examenPrimeraUnidad.service.AlumnoService;
 import com.examen.primera.unidad.examenPrimeraUnidad.utils.Custom2;
@@ -18,69 +19,64 @@ import com.examen.primera.unidad.examenPrimeraUnidad.utils.Data;
 @RequestMapping("/alumno/ica")
 public class AlumnoController {
 	private AlumnoModel alumno;
+	private CalculadoraICA calculadora= new CalculadoraICA();
 	
 	@Autowired
 	private AlumnoService alumnoService;
 	
 	 @PostMapping("/")
-	 public CustomResponse createAlumno(@RequestBody AlumnoModel alumno) {
-		 CustomResponse customResponse = new CustomResponse();
-	        alumnoService.createAlumno(alumno);
-	        return customResponse;
+	 public Object createAlumno(@RequestBody AlumnoModel alumno) { //PRIMER FLUJ0
+		
+		 alumnoService.createAlumno(alumno);
+		 CustomResponse customResponse= new CustomResponse();
+		 Custom2 custom2= new Custom2();
+		 
+		 if(!(calculadora.validacion(alumno))) {
+			 Double ICA= calculadora.calcularICA(alumno.getMedidaCintura(), alumno.getMedidaAltura());
+			 String msg= calculadora.nivel(ICA, alumno.getSexo());
+			 
+			 
+			 customResponse.setData(new Data(ICA,msg));
+			 return customResponse;
+			 
+		 }else {
+			 custom2.setData("No se cuenta con la información necesaria para realizar el calculo");		
+			 return custom2;
+					 
+		 }
+		 
 	 }
-	
-	@GetMapping("/{numControl}")
-	public CustomResponse getICA(@PathVariable String numControl) {
-		CustomResponse customResponse= new CustomResponse();
-		alumno=alumnoService.getAlumno(numControl);
-		Double ICA= alumno.getMedidaCintura() / alumno.getMedidaAltura();;
-		alumno.setcalculoICA(ICA);
-		
-		if(alumno.getSexo().equals('h')) {
-			if(ICA <= 0.34) {
-				alumno.setNivel("Delgadez severa");
-			}else if(ICA <= 0.42) {
-				alumno.setNivel("Delgadez leve");
-			}else if(ICA <= 0.52) {
-				alumno.setNivel("Peso normal");
-			}else if(ICA <= 0.57) {
-				alumno.setNivel("Sobrepeso");
-			}else if(ICA <= 0.62) {
-				alumno.setNivel("Sobrepeso elevado");
-			}else if(ICA >= 0.63) {
-				alumno.setNivel("Obesidad mórbida");
-			}
+	 
+	 @GetMapping("/{numControl}")
+	 public Object getICAnumControl(@PathVariable String numControl) { //SEGUNDO FLUJO
+		 CustomResponse customResponse= new CustomResponse();
+		 Custom2 custom2= new Custom2();
+		 alumno= alumnoService.getAlumno(numControl);
+		 
+		 try {			 
+			 if (!alumno.equals(null)) {
+				 
+				 if(!calculadora.validacion(alumno)) {
+					 
+					 Double ICA= calculadora.calcularICA(alumno.getMedidaCintura(), alumno.getMedidaAltura());
+					 String msg= calculadora.nivel(ICA, alumno.getSexo());					 
+					 
+					 customResponse.setData(new Data(ICA,msg));
+					 return customResponse;
+					 
+				 }
+					custom2.setData("No se cuenta con la información necesaria para realizar el calculo");
+					return custom2;
+			 }
+			 
+		 }catch (NullPointerException e) {
+			 custom2.setData("Alumno no existe");
+			 
+			 return custom2;
 		}
+		return null;
 		
-		if(alumno.getSexo().equals('m')) {
-			if(ICA <= 0.34) {
-				alumno.setNivel("Delgadez severa");
-			}else if(ICA <= 0.41) {
-				alumno.setNivel("Delgadez leve");
-			}else if(ICA <= 0.48) {
-				alumno.setNivel("Peso normal");
-			}else if(ICA <= 0.53) {
-				alumno.setNivel("Sobrepeso");
-			}else if(ICA <= 0.57) {
-				alumno.setNivel("Sobrepeso elevado");
-			}else if(ICA >= 0.58) {
-				alumno.setNivel("Obesidad mórbida");
-			}
-			
-		}
-		Data data= new Data(alumno.getcalculoICA(), alumno.getNivel());
-		customResponse.setData(data);
-		
-		return customResponse;
-	}
+	 }
 
-	@GetMapping("/alumno/{numControl}")
-	public Custom2 getAlumno(@PathVariable String numControl) {
-		Custom2 customResponse= new Custom2();
-		
-		customResponse.setData(alumnoService.getAlumno(numControl));
-		
-		return customResponse;
-	}
 }
 

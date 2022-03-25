@@ -4,10 +4,13 @@ public class Data {
 	private Double ICA;
 	private String nivel;
 	
+	
 	public Data(Double iCA, String nivel) {
 		ICA = iCA;
 		this.nivel = nivel;
 	}
+	
+	
 	public Data() {
 		
 	}
@@ -26,6 +29,14 @@ public class Data {
 
 	public void setNivel(String nivel) {
 		this.nivel = nivel;
+	}
+	
+
+
+
+	@Override
+	public String toString() {
+		return "Data [ICA=" + ICA + ", nivel=" + nivel +  "]";
 	}
 	
 	

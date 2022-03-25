@@ -19,30 +19,20 @@ public class AlumnoModel {
 	private Character sexo; // h m
 	private Double medidaCintura;
 	private Double medidaAltura;
-	private Double calculoICA;
-	private String nivel;
 	
-	public AlumnoModel() {}
 	
-	public AlumnoModel(Integer id, String numControl, Character sexo, Double medidaCintura, Double medidaAltura) {
-		this.id = id;
+	public AlumnoModel() {}	
+	public AlumnoModel(String numControl) {this.numControl = numControl;}
+
+	public AlumnoModel(String numControl, Character sexo, Double medidaCintura, Double medidaAltura) {
 		this.numControl = numControl;
 		this.sexo = sexo;
 		this.medidaCintura = medidaCintura;
 		this.medidaAltura = medidaAltura;
 	}
 	
-
-	public AlumnoModel(String numControl, Character sexo, Double medidaCintura, Double medidaAltura, Double calculoICA,
-			String nivel) {
-		this.numControl = numControl;
-		this.sexo = sexo;
-		this.medidaCintura = medidaCintura;
-		this.medidaAltura = medidaAltura;
-		this.calculoICA = calculoICA;
-		this.nivel = nivel;
-	}
-
+	
+	
 	public Integer getId() {
 		return id;
 	}
@@ -71,24 +61,5 @@ public class AlumnoModel {
 	public void setMedidaAltura(Double medidaAltura) {
 		this.medidaAltura = medidaAltura;
 	}
-
-	public Double getcalculoICA() {
-		return calculoICA;
-	}
-
-	public void setcalculoICA(Double calculoICA) {
-		this.calculoICA = calculoICA;
-	}
-
-	public String getNivel() {
-		return nivel;
-	}
-
-	public void setNivel(String nivel) {
-		this.nivel = nivel;
-	}
-	
-	
-	
 
 }
